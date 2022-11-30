@@ -1,0 +1,585 @@
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="爛碼札記">
+    <title>Tranquilpeak &amp; 改動記錄 - 爛碼札記</title>
+    <meta name="author" content="DonkeyBear">
+    
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg"},"articleBody":"慶祝新居落成！感謝 Hexo！\n為了將學習程式語言過程中的難點與心得記錄下來，第一次嘗試使用靜態網頁生成的方式搭建部落格，花了好多時間才終於挑出一個喜歡的主題：Tranquilpeak。\n\n\nTranquilpeak 原先似乎是 Hugo 上的主題，再經由有愛人士移植到 Hexo 上。其實仔細比對，會發現兩者還是有那麼一點點點的不一樣（例如側欄的彈出動畫），不過都是些無傷大雅的微小差異，不影響整體功能及美觀。\n補充訂正：經過作者本人說明，Hexo 版似乎才是原版，而 Hugo 版才是仿作。\n\n\n\n\n為什麼選擇 Tranquilpeak在茫茫主題海之中，為什麼要選擇這樣一個連名字都不知道怎麼念的呢？\n因為 Tranquilpeak 最符合我的需求：\n\n響應式網頁設計\n版面整潔\n功能簡單\n支援中文\n\n響應式網頁設計響應式網頁設計（Responsive Web Design）俗稱 RWD。簡單來說就是會視使用者視窗寬度而改變網頁樣式的設計方式，實務上最常見的應用是將網頁分為電腦版與手機版兩種樣式，以自動適應手機的小尺寸窄螢幕。\n根據我先前曾經架設過的部落格後台數據，網站的流量有八成以上來自行動裝置，也就是說，在這個機不離身的時代，無法適應手機螢幕的網站已經是半殘的存在，也因此，我將 RWD 排在挑選主題需求的第一順位。\n版面整潔 &amp; 功能簡單許多人推薦的另一個 Hexo 主題是 Icarus，因此我也稍微嘗試了一下，但是 Icarus 的版面真的太亂了，太多不必要的欄位出現在同一個頁面，畫面上過多的資訊讓人疲勞，且難以專注在文章內容上。\n補充：後來再次研究後發現，像 Icarus 這樣成熟的主題，通常具備許多配置選項，其中也包含了刪改版面欄位，也許我會考慮在另一個部落格使用它。\n\n\n我認為版面整潔對於內容導向的網站是一件非常重要的事，以近年新興的部落格平台 Medium 為例，有了乾淨、整齊的版面，不僅減少讀者的視覺負擔，更能讓創作者專心耕耘內容。\n支援中文雖說「是否支援中文」對於有經驗的前端工作者而言影響不大（自訂主題語言難度不高），但是能夠在設定檔裡面用一行 language: zh-tw 解決的事情，果然還是不想親自處理。\n結語以上就是新居落成後的第一篇文章，雖然是硬擠出來的，好歹也是抱著「如果能幫助到為了挑選主題而煩惱的人就好了」的認真心態而寫的，因此內容也不算是太馬虎，希望真的有人會看啦……希望……\n附錄雖說是附錄，其實只是我怕忘記自己對主題做過什麼更動而留下的紀錄，所以不看也沒有關係的呦 😉\n/themes/tranquilpeak/source/_css/custom/custom.scss123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137sup,sub,code &#123;    // 使行距不會加寬    line-height: 0;&#125;hr &#123;    margin: 15px 0;&#125;.postShorten-content,.postShorten-excerpt,.post-content &#123;    p,    li &#123;        // 將文章內容左右對齊        // text-align: justify;        // 將內文字型改為 Bootstrap 風格        font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, &quot;Liberation Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;    &#125;    li &#123;        // 增加清單項目間距        margin-bottom: 1rem;    &#125;&#125;.post .post-content :not(blockquote):not(li):not(.alert)&gt;p &#123;    // 將文章頁面內的段落間距由上改至下（與文章列表一致）    margin: 0 0 25px 0;&#125;#header .header-title .header-title-link &#123;    // 將頁首標題加粗    font-weight: 600;&#125;#header.header-up &#123;    // 修正頁首縮回後的高度    transform: translate3d(0, -57px, 0);&#125;.header-picture &#123;    // 讓 header 中的頭像更圓，並加上細邊框    border-radius: 50rem !important;    padding: 1px;    border: 1px #dfe4ec solid;&#125;#about-card-picture &#123;    // 讓 about 中的頭像更圓，並加上細邊框    border-radius: 50rem !important;    border: 1px #d1d7e1 solid;    padding: .2rem;&#125;.sidebar-profile-name,.sidebar-button-icon,.sidebar-button-desc &#123;    // 修改側欄內的文字顏色    color: #ffffff !important;&#125;.sidebar-button-link &#123;    // 調整側欄內連結的左邊距    padding-left: 4rem !important;&#125;blockquote &#123;    border-left: 3px solid rgba(93, 104, 111, 0.5);    font-style: normal;    color: rgba(93, 104, 111, 0.75);&#125;.codeblock,figure.highlight &#123;    // 程式碼區塊    border-radius: .5rem;    margin: 10px 0 25px;    figcaption &#123;        // 修改程式碼區塊上的檔名        font-family: Menlo, Consolas, monospace;        padding: 0 25px 15px;        border-bottom: #e6e6e6 solid 1px;        color: #6c6666;    &#125;&#125;code &#123;    // 修改行內程式碼樣式    font-size: .85em !important;    display: inline !important;    padding: .35em .6em .1em !important;    border-radius: 0.3em;    background-color: #f2f2f2;&#125;@media #&#123;$medium-only&#125; &#123;    .sidebar-button-link &#123;        // 修正側欄內連結的左邊距        padding-left: unset !important;    &#125;&#125;@media #&#123;$medium-and-up&#125; &#123;    #main[data-behavior=&quot;2&quot;] &#123;        // 加大文章列表頁面頂部空白        padding-top: 50px;    &#125;    #about-card-job &#123;        // 修正「關於我」裡的工作欄邊界        padding: 0 15px !important;        // 修正「關於我」裡的工作欄寬度        width: auto !important;    &#125;&#125;@media #&#123;$small-and-down&#125; &#123;    .postShorten.postShorten--thumbnailimg-bottom &#123;        // 調整文章列表的間隔        margin-top: 0;        margin-bottom: 15px;    &#125;    .post-content &#123;        // 調整文章內文的上邊界        margin-top: 15px !important;    &#125;    #footer &#123;        margin-top: 20px;    &#125;&#125;\n\n/themes/tranquilpeak/source/_css/tranquilpeak.scss123...@import    &#x27;custom/custom&#x27;\n\n/themes/tranquilpeak/layout/_partial/index.ejs1234...// 為了SEO，把文章目錄（ToC）的標題由一級改為二級tableOfContents = &#x27;&lt;h2 id=\\&quot;table-of-contents\\&quot;&gt;&#x27; + __(&#x27;post.toc&#x27;) + &#x27;&lt;/h2&gt;&#x27;;...\n\n/themes/tranquilpeak/layout/_partial/post.ejs1234...// 與上面情況相同，在不同檔案再改一次tableOfContents = &#x27;&lt;h2 id=\\&quot;table-of-contents\\&quot;&gt;&#x27; + __(&#x27;post.toc&#x27;) + &#x27;&lt;/h2&gt;&#x27;;...\n\n\n補充：關於 highlight.js在 Tranquilpeak 裡內建的程式碼標色功能有夠差勁，除了顏色主題不好看，更重要的是有許多該上色的地方沒有標到。為了處理上述問題，我開始在網路上尋找解決方案，最一開始在別人的部落格裡找到了關閉預設的程式碼標色並另外引入獨立的 highlight.js 的方法，但是這麼做的話，會失去 Tranquilpeak 裡的程式碼區塊行數和標題等功能，索性繼續搜尋，最終在 Tranquilpeak 的文檔中找到了最佳解（出問題不先翻翻官方文檔的我是白癡），詳細的步驟都寫在裡面了，也許某天有空，我會另起一篇分享自己挑選和置換新主題的過程。\n","dateCreated":"2022-04-22T07:31:19+08:00","dateModified":"2022-11-30T19:57:26+08:00","datePublished":"2022-04-22T07:31:19+08:00","description":"慶祝新居落成！感謝 Hexo！\n為了將學習程式語言過程中的難點與心得記錄下來，第一次嘗試使用靜態網頁生成的方式搭建部落格，花了好多時間才終於挑出一個喜歡的主題：Tranquilpeak。","headline":"Tranquilpeak & 改動記錄","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/04/tranquilpeak-config-log/"},"publisher":{"@type":"Organization","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg","logo":{"@type":"ImageObject","url":"profile.svg"}},"url":"http://example.com/2022/04/tranquilpeak-config-log/","keywords":"Hexo"}</script>
+    <meta name="description" content="慶祝新居落成！感謝 Hexo！ 為了將學習程式語言過程中的難點與心得記錄下來，第一次嘗試使用靜態網頁生成的方式搭建部落格，花了好多時間才終於挑出一個喜歡的主題：Tranquilpeak。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Tranquilpeak &amp; 改動記錄">
+<meta property="og:url" content="http://example.com/2022/04/tranquilpeak-config-log/index.html">
+<meta property="og:site_name" content="爛碼札記">
+<meta property="og:description" content="慶祝新居落成！感謝 Hexo！ 為了將學習程式語言過程中的難點與心得記錄下來，第一次嘗試使用靜態網頁生成的方式搭建部落格，花了好多時間才終於挑出一個喜歡的主題：Tranquilpeak。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-04-21T23:31:19.000Z">
+<meta property="article:modified_time" content="2022-11-30T11:57:26.991Z">
+<meta property="article:author" content="DonkeyBear">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://example.com/assets/images/profile.svg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-b4juzvgxzyppe2o0zjnuuhk7czimzmnqxnnekdtgx4m7n9aqjyghs4ccv3j4.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            爛碼札記
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="打開連結: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/profile.svg" alt="作者的圖片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="閱讀有關作者的更多資訊"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.svg" alt="作者的圖片"/>
+                </a>
+                <h4 class="sidebar-profile-name">DonkeyBear</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>不想寫低階語言，只好從前端慢慢往後端爬。<br>短期目標是全端工程師。</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="首頁"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首頁</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="標籤"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">標籤</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="文章"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">文章</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="關於"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">關於</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/DonkeyBear"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Tranquilpeak &amp; 改動記錄
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-04-22T07:31:19+08:00">
+	
+		    4月 22, 2022
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>慶祝新居落成！感謝 Hexo！</p>
+<p>為了將學習程式語言過程中的難點與心得記錄下來，第一次嘗試使用靜態網頁生成的方式搭建部落格，花了好多時間才終於挑出一個喜歡的主題：<a target="_blank" rel="noopener" href="https://github.com/LouisBarranqueiro/hexo-theme-tranquilpeak">Tranquilpeak</a>。</p>
+<span id="more"></span>
+
+<p>Tranquilpeak 原先似乎是 Hugo 上的主題，再經由有愛人士移植到 Hexo 上。其實仔細比對，會發現兩者還是有那麼一點點點的不一樣（例如側欄的彈出動畫），不過都是些無傷大雅的微小差異，不影響整體功能及美觀。</p>
+<div class="alert info"><p>補充訂正：經過<a target="_blank" rel="noopener" href="https://github.com/LouisBarranqueiro/hexo-theme-tranquilpeak/issues/702#issuecomment-1110307882">作者本人說明</a>，Hexo 版似乎才是原版，而 Hugo 版才是仿作。</p>
+</div>
+
+<h2 id="table-of-contents">目錄</h2><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E9%81%B8%E6%93%87-Tranquilpeak"><span class="toc-text">為什麼選擇 Tranquilpeak</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9F%BF%E6%87%89%E5%BC%8F%E7%B6%B2%E9%A0%81%E8%A8%AD%E8%A8%88"><span class="toc-text">響應式網頁設計</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E9%9D%A2%E6%95%B4%E6%BD%94-amp-%E5%8A%9F%E8%83%BD%E7%B0%A1%E5%96%AE"><span class="toc-text">版面整潔 &amp; 功能簡單</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%AF%E6%8F%B4%E4%B8%AD%E6%96%87"><span class="toc-text">支援中文</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B5%90%E8%AA%9E"><span class="toc-text">結語</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E9%8C%84"><span class="toc-text">附錄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A3%9C%E5%85%85%EF%BC%9A%E9%97%9C%E6%96%BC-highlight-js"><span class="toc-text">補充：關於 highlight.js</span></a></li></ol>
+
+<h2 id="為什麼選擇-Tranquilpeak"><a href="#為什麼選擇-Tranquilpeak" class="headerlink" title="為什麼選擇 Tranquilpeak"></a>為什麼選擇 Tranquilpeak</h2><p>在茫茫主題海之中，為什麼要選擇這樣一個連名字都不知道怎麼念的呢？</p>
+<p>因為 Tranquilpeak 最符合我的需求：</p>
+<ul>
+<li>響應式網頁設計</li>
+<li>版面整潔</li>
+<li>功能簡單</li>
+<li>支援中文</li>
+</ul>
+<h3 id="響應式網頁設計"><a href="#響應式網頁設計" class="headerlink" title="響應式網頁設計"></a>響應式網頁設計</h3><p>響應式網頁設計（Responsive Web Design）俗稱 RWD。簡單來說就是會視使用者視窗寬度而改變網頁樣式的設計方式，實務上最常見的應用是將網頁分為電腦版與手機版兩種樣式，以自動適應手機的小尺寸窄螢幕。</p>
+<p>根據我先前曾經架設過的部落格後台數據，網站的流量有八成以上來自行動裝置，也就是說，在這個機不離身的時代，無法適應手機螢幕的網站已經是半殘的存在，也因此，我將 RWD 排在挑選主題需求的第一順位。</p>
+<h3 id="版面整潔-amp-功能簡單"><a href="#版面整潔-amp-功能簡單" class="headerlink" title="版面整潔 &amp; 功能簡單"></a>版面整潔 &amp; 功能簡單</h3><p>許多人推薦的另一個 Hexo 主題是 <a target="_blank" rel="noopener" href="https://github.com/ppoffice/hexo-theme-icarus">Icarus</a>，因此我也稍微嘗試了一下，但是 Icarus 的版面真的太亂了，太多不必要的欄位出現在同一個頁面，畫面上過多的資訊讓人疲勞，且難以專注在文章內容上。</p>
+<div class="alert info"><p>補充：後來再次研究後發現，像 Icarus 這樣成熟的主題，通常具備許多配置選項，其中也包含了刪改版面欄位，也許我會考慮在另一個部落格使用它。</p>
+</div>
+
+<p>我認為版面整潔對於內容導向的網站是一件非常重要的事，以近年新興的部落格平台 Medium 為例，有了乾淨、整齊的版面，不僅減少讀者的視覺負擔，更能讓創作者專心耕耘內容。</p>
+<h3 id="支援中文"><a href="#支援中文" class="headerlink" title="支援中文"></a>支援中文</h3><p>雖說「是否支援中文」對於有經驗的前端工作者而言影響不大（自訂主題語言難度不高），但是能夠在設定檔裡面用一行 <code>language: zh-tw</code> 解決的事情，果然還是不想親自處理。</p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>以上就是新居落成後的第一篇文章，雖然是硬擠出來的，好歹也是抱著「如果能幫助到為了挑選主題而煩惱的人就好了」的認真心態而寫的，因此內容也不算是太馬虎，希望真的有人會看啦……希望……</p>
+<h2 id="附錄"><a href="#附錄" class="headerlink" title="附錄"></a>附錄</h2><p>雖說是附錄，其實只是我怕忘記自己對主題做過什麼更動而留下的紀錄，所以不看也沒有關係的呦 😉</p>
+<figure class="highlight scss"><figcaption><span>/themes/tranquilpeak/source/_css/custom/custom.scss</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">sup</span>,</span><br><span class="line">sub,</span><br><span class="line"><span class="selector-tag">code</span> &#123;</span><br><span class="line">    <span class="comment">// 使行距不會加寬</span></span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hr &#123;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">15px</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.postShorten-content</span>,</span><br><span class="line"><span class="selector-class">.postShorten-excerpt</span>,</span><br><span class="line"><span class="selector-class">.post-content</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">p</span>,</span><br><span class="line">    <span class="selector-tag">li</span> &#123;</span><br><span class="line">        <span class="comment">// 將文章內容左右對齊</span></span><br><span class="line">        <span class="comment">// text-align: justify;</span></span><br><span class="line">        <span class="comment">// 將內文字型改為 Bootstrap 風格</span></span><br><span class="line">        <span class="attribute">font-family</span>: system-ui, -apple-system, <span class="string">&quot;Segoe UI&quot;</span>, Roboto, <span class="string">&quot;Helvetica Neue&quot;</span>, Arial, <span class="string">&quot;Noto Sans&quot;</span>, <span class="string">&quot;Liberation Sans&quot;</span>, sans-serif, <span class="string">&quot;Apple Color Emoji&quot;</span>, <span class="string">&quot;Segoe UI Emoji&quot;</span>, <span class="string">&quot;Segoe UI Symbol&quot;</span>, <span class="string">&quot;Noto Color Emoji&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">li</span> &#123;</span><br><span class="line">        <span class="comment">// 增加清單項目間距</span></span><br><span class="line">        <span class="attribute">margin-bottom</span>: <span class="number">1rem</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.post</span> <span class="selector-class">.post-content</span> <span class="selector-pseudo">:not</span>(blockquote)<span class="selector-pseudo">:not</span>(li)<span class="selector-pseudo">:not</span>(.alert)&gt;<span class="selector-tag">p</span> &#123;</span><br><span class="line">    <span class="comment">// 將文章頁面內的段落間距由上改至下（與文章列表一致）</span></span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">25px</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#header</span> <span class="selector-class">.header-title</span> <span class="selector-class">.header-title-link</span> &#123;</span><br><span class="line">    <span class="comment">// 將頁首標題加粗</span></span><br><span class="line">    <span class="attribute">font-weight</span>: <span class="number">600</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#header</span><span class="selector-class">.header-up</span> &#123;</span><br><span class="line">    <span class="comment">// 修正頁首縮回後的高度</span></span><br><span class="line">    <span class="attribute">transform</span>: translate3d(<span class="number">0</span>, -<span class="number">57px</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.header-picture</span> &#123;</span><br><span class="line">    <span class="comment">// 讓 header 中的頭像更圓，並加上細邊框</span></span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">50rem</span> <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">1px</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> <span class="number">#dfe4ec</span> solid;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#about-card-picture</span> &#123;</span><br><span class="line">    <span class="comment">// 讓 about 中的頭像更圓，並加上細邊框</span></span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">50rem</span> <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> <span class="number">#d1d7e1</span> solid;</span><br><span class="line">    <span class="attribute">padding</span>: .<span class="number">2rem</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.sidebar-profile-name</span>,</span><br><span class="line"><span class="selector-class">.sidebar-button-icon</span>,</span><br><span class="line"><span class="selector-class">.sidebar-button-desc</span> &#123;</span><br><span class="line">    <span class="comment">// 修改側欄內的文字顏色</span></span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#ffffff</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.sidebar-button-link</span> &#123;</span><br><span class="line">    <span class="comment">// 調整側欄內連結的左邊距</span></span><br><span class="line">    <span class="attribute">padding-left</span>: <span class="number">4rem</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">blockquote</span> &#123;</span><br><span class="line">    <span class="attribute">border-left</span>: <span class="number">3px</span> solid rgba(<span class="number">93</span>, <span class="number">104</span>, <span class="number">111</span>, <span class="number">0.5</span>);</span><br><span class="line">    <span class="attribute">font-style</span>: normal;</span><br><span class="line">    <span class="attribute">color</span>: rgba(<span class="number">93</span>, <span class="number">104</span>, <span class="number">111</span>, <span class="number">0.75</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.codeblock</span>,</span><br><span class="line"><span class="selector-tag">figure</span><span class="selector-class">.highlight</span> &#123;</span><br><span class="line">    <span class="comment">// 程式碼區塊</span></span><br><span class="line">    <span class="attribute">border-radius</span>: .<span class="number">5rem</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">0</span> <span class="number">25px</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">figcaption</span> &#123;</span><br><span class="line">        <span class="comment">// 修改程式碼區塊上的檔名</span></span><br><span class="line">        <span class="attribute">font-family</span>: Menlo, Consolas, monospace;</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">25px</span> <span class="number">15px</span>;</span><br><span class="line">        <span class="attribute">border-bottom</span>: <span class="number">#e6e6e6</span> solid <span class="number">1px</span>;</span><br><span class="line">        <span class="attribute">color</span>: <span class="number">#6c6666</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">code</span> &#123;</span><br><span class="line">    <span class="comment">// 修改行內程式碼樣式</span></span><br><span class="line">    <span class="attribute">font-size</span>: .<span class="number">85em</span> <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">display</span>: inline <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">padding</span>: .<span class="number">35em</span> .<span class="number">6em</span> .<span class="number">1em</span> <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">0.3em</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f2f2f2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@media</span> #&#123;<span class="variable">$medium-only</span>&#125; &#123;</span><br><span class="line">    <span class="selector-class">.sidebar-button-link</span> &#123;</span><br><span class="line">        <span class="comment">// 修正側欄內連結的左邊距</span></span><br><span class="line">        <span class="attribute">padding-left</span>: unset <span class="meta">!important</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@media</span> #&#123;<span class="variable">$medium-and-up</span>&#125; &#123;</span><br><span class="line">    <span class="selector-id">#main</span><span class="selector-attr">[data-behavior=<span class="string">&quot;2&quot;</span>]</span> &#123;</span><br><span class="line">        <span class="comment">// 加大文章列表頁面頂部空白</span></span><br><span class="line">        <span class="attribute">padding-top</span>: <span class="number">50px</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-id">#about-card-job</span> &#123;</span><br><span class="line">        <span class="comment">// 修正「關於我」裡的工作欄邊界</span></span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">15px</span> <span class="meta">!important</span>;</span><br><span class="line">        <span class="comment">// 修正「關於我」裡的工作欄寬度</span></span><br><span class="line">        <span class="attribute">width</span>: auto <span class="meta">!important</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@media</span> #&#123;<span class="variable">$small-and-down</span>&#125; &#123;</span><br><span class="line">    <span class="selector-class">.postShorten</span><span class="selector-class">.postShorten--thumbnailimg-bottom</span> &#123;</span><br><span class="line">        <span class="comment">// 調整文章列表的間隔</span></span><br><span class="line">        <span class="attribute">margin-top</span>: <span class="number">0</span>;</span><br><span class="line">        <span class="attribute">margin-bottom</span>: <span class="number">15px</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.post-content</span> &#123;</span><br><span class="line">        <span class="comment">// 調整文章內文的上邊界</span></span><br><span class="line">        <span class="attribute">margin-top</span>: <span class="number">15px</span> <span class="meta">!important</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-id">#footer</span> &#123;</span><br><span class="line">        <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight scss"><figcaption><span>/themes/tranquilpeak/source/_css/tranquilpeak.scss</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">@import</span></span><br><span class="line">    <span class="string">&#x27;custom/custom&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><figcaption><span>/themes/tranquilpeak/layout/_partial/index.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">// 為了SEO，把文章目錄（ToC）的標題由一級改為二級</span></span><br><span class="line">tableOfContents = <span class="string">&#x27;&lt;h2 id=\&quot;table-of-contents\&quot;&gt;&#x27;</span> + __(<span class="string">&#x27;post.toc&#x27;</span>) + <span class="string">&#x27;&lt;/h2&gt;&#x27;</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><figcaption><span>/themes/tranquilpeak/layout/_partial/post.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="comment">// 與上面情況相同，在不同檔案再改一次</span></span><br><span class="line">tableOfContents = <span class="string">&#x27;&lt;h2 id=\&quot;table-of-contents\&quot;&gt;&#x27;</span> + __(<span class="string">&#x27;post.toc&#x27;</span>) + <span class="string">&#x27;&lt;/h2&gt;&#x27;</span>;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="補充：關於-highlight-js"><a href="#補充：關於-highlight-js" class="headerlink" title="補充：關於 highlight.js"></a>補充：關於 highlight.js</h2><p>在 Tranquilpeak 裡內建的程式碼標色功能有夠差勁，除了顏色主題不好看，更重要的是有許多該上色的地方沒有標到。為了處理上述問題，我開始在網路上尋找解決方案，最一開始在<a target="_blank" rel="noopener" href="https://blog.onemid.net/blog/hexo-syntax-highlighting/">別人的部落格</a>裡找到了關閉預設的程式碼標色並另外引入獨立的 highlight.js 的方法，但是這麼做的話，會失去 Tranquilpeak 裡的程式碼區塊行數和標題等功能，索性繼續搜尋，最終在 <a target="_blank" rel="noopener" href="https://github.com/LouisBarranqueiro/hexo-theme-tranquilpeak/blob/master/DOCUMENTATION.md#modifying-the-theme">Tranquilpeak 的文檔</a>中找到了最佳解（出問題不先翻翻官方文檔的我是白癡），詳細的步驟都寫在裡面了，也許某天有空，我會另起一篇分享自己挑選和置換新主題的過程。</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">標籤</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/Hexo/" rel="tag">Hexo</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/04/first-sight-with-sqljs/"
+                    data-tooltip="[WIP] 與 SQL.js 的初次見面！"
+                    aria-label="上一篇: [WIP] 與 SQL.js 的初次見面！"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Diesen Beitrag teilen"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/04/tranquilpeak-config-log/"
+                    title="分享到 Facebook"
+                    aria-label="分享到 Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://example.com/2022/04/tranquilpeak-config-log/"
+                    title="分享到 Twitter"
+                    aria-label="分享到 Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://example.com/2022/04/tranquilpeak-config-log/"
+                    title="分享到 LinkedIn"
+                    aria-label="分享到 LinkedIn"
+                >
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目錄">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2022 DonkeyBear. All Rights Reserved.
+    </span>
+</footer>
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/04/first-sight-with-sqljs/"
+                    data-tooltip="[WIP] 與 SQL.js 的初次見面！"
+                    aria-label="上一篇: [WIP] 與 SQL.js 的初次見面！"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Diesen Beitrag teilen"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/04/tranquilpeak-config-log/"
+                    title="分享到 Facebook"
+                    aria-label="分享到 Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://example.com/2022/04/tranquilpeak-config-log/"
+                    title="分享到 Twitter"
+                    aria-label="分享到 Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://example.com/2022/04/tranquilpeak-config-log/"
+                    title="分享到 LinkedIn"
+                    aria-label="分享到 LinkedIn"
+                >
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目錄">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/04/tranquilpeak-config-log/"
+                        aria-label="分享到 Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>分享到 Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=http://example.com/2022/04/tranquilpeak-config-log/"
+                        aria-label="分享到 Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>分享到 Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://example.com/2022/04/tranquilpeak-config-log/"
+                        aria-label="分享到 LinkedIn"
+                    >
+                        <i class="fab fa-linkedin" aria-hidden="true"></i><span>分享到 LinkedIn</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.svg" alt="作者的圖片"/>
+        
+            <h4 id="about-card-name">DonkeyBear</h4>
+        
+            <div id="about-card-bio"><p>不想寫低階語言，只好從前端慢慢往後端爬。<br>短期目標是全端工程師。</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>學生 / 前端工程師（接案）</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-nnuo5rznqmvb5at3cscfhmygkdifmhq2g3q2vtmybnj2jpm7jmtltchwbhyw.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
