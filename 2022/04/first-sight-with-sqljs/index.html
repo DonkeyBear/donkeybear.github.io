@@ -9,13 +9,15 @@
     <title>[WIP] 與 SQL.js 的初次見面！ - 爛碼札記</title>
     <meta name="author" content="DonkeyBear">
     
+        <meta name="keywords" content="程式,前端,">
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg"},"articleBody":"在 SQL.js 之前，我想先稍稍離題一下。\n最近，我因為《遊戲王：大師決鬥》的推出而回鍋卡牌遊戲了。在不斷抄牌、組牌、打牌的過程中，發現一個非常好用的查卡網站──由 salix5 大大所開發的卡片查詢。\n這個卡片查詢網站是部署在 github.io 網域下的，意即是透過 GitHub-Pages 功能所生成的靜態網頁。但是遊戲王的卡片總數目前已超過一萬種，如此查詢系統勢必要使用到資料庫，照理來說，靜態網頁應該是無法使用資料庫的……吧？\n科技始終來自於人性，於是，SQL.js 誕生了。\n\n\nSQL.js 能夠讓使用者（或開發者）儲存、讀取甚至建立本機端的資料庫，非常適合應用在輕前端開發。只需要使用 &lt;script&gt; 標籤引入，再額外加上五、六行程式碼，就完成準備工作了。\n\n\n如何使用\n到 SQL.js 的 GitHub 發布區，下載最新版本的 wasm version，並放入專案資料夾內。\n\n在你想引入的 HTML 頁面裡，放上對應路徑的 &lt;script&gt; 標籤，建議放在 &lt;/body&gt; 標籤與其他 &lt;script&gt; 標籤前。\n/index.html1234567...    &lt;!-- 我的 sql-wasm.js 放在 modules 資料夾內，所以這樣寫 --&gt;    &lt;script src=&quot;./modules/sql-wasm.js&quot;&gt;&lt;/script&gt;    &lt;!-- 我自己寫的 JS 程式 --&gt;    &lt;script src=&quot;./main.js&quot;&gt;&lt;/script&gt;  &lt;/body&gt;&lt;/html&gt;\n新建一個 JavaScript 程式，並且在上述 HTML 檔內引入（如上方範例中的 main.js），切記一定要在 sql-wasm.js 之後引入。\n\n在上一步新建的 JavaScript 程式內寫上：\n/main.js1234567let config = &#123;  // 指定 sql-wasm.wasm 所存放的路徑  locateFile: () =&gt; &quot;./modules/sql-wasm.wasm&quot;,&#125;;initSqlJs(config).then(response =&gt; &#123;  SQL = response;&#125;);\n大功告成！現在你已經可以用 JavaScript 操作資料庫了！\n\n\n如何讀取現有的資料庫","dateCreated":"2022-04-28T20:25:47+08:00","dateModified":"2022-11-30T23:57:13+08:00","datePublished":"2022-04-28T20:25:47+08:00","description":"在 SQL.js 之前，我想先稍稍離題一下。\n最近，我因為《遊戲王：大師決鬥》的推出而回鍋卡牌遊戲了。在不斷抄牌、組牌、打牌的過程中，發現一個非常好用的查卡網站──由 salix5 大大所開發的卡片查詢。\n這個卡片查詢網站是部署在 github.io 網域下的，意即是透過 GitHub-Pages 功能所生成的靜態網頁。但是遊戲王的卡片總數目前已超過一萬種，如此查詢系統勢必要使用到資料庫，照理來說，靜態網頁應該是無法使用資料庫的……吧？\n科技始終來自於人性，於是，SQL.js 誕生了。","headline":"[WIP] 與 SQL.js 的初次見面！","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2022/04/first-sight-with-sqljs/"},"publisher":{"@type":"Organization","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg","logo":{"@type":"ImageObject","url":"profile.svg"}},"url":"http://example.com/2022/04/first-sight-with-sqljs/","keywords":"SQL, JavaScript"}</script>
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg"},"articleBody":"在 SQL.js 之前，我想先稍稍離題一下。\n最近，我因為《遊戲王：大師決鬥》的推出而回鍋卡牌遊戲了。在不斷抄牌、組牌、打牌的過程中，發現一個非常好用的查卡網站──由 salix5 大大所開發的卡片查詢。\n這個卡片查詢網站是部署在 github.io 網域下的，意即是透過 GitHub-Pages 功能所生成的靜態網頁。但是遊戲王的卡片總數目前已超過一萬種，如此查詢系統勢必要使用到資料庫，照理來說，靜態網頁應該是無法使用資料庫的……吧？\n科技始終來自於人性，於是，SQL.js 誕生了。\n\n\nSQL.js 能夠讓使用者（或開發者）儲存、讀取甚至建立本機端的資料庫，非常適合應用在輕前端開發。只需要使用 &lt;script&gt; 標籤引入，再額外加上五、六行程式碼，就完成準備工作了。\n\n\n如何使用\n到 SQL.js 的 GitHub 發布區，下載最新版本的 wasm version，並放入專案資料夾內。\n\n在你想引入的 HTML 頁面裡，放上對應路徑的 &lt;script&gt; 標籤，建議放在 &lt;/body&gt; 標籤與其他 &lt;script&gt; 標籤前。\n/index.html1234567...    &lt;!-- 我的 sql-wasm.js 放在 modules 資料夾內，所以這樣寫 --&gt;    &lt;script src=&quot;./modules/sql-wasm.js&quot;&gt;&lt;/script&gt;    &lt;!-- 我自己寫的 JS 程式 --&gt;    &lt;script src=&quot;./main.js&quot;&gt;&lt;/script&gt;  &lt;/body&gt;&lt;/html&gt;\n新建一個 JavaScript 程式，並且在上述 HTML 檔內引入（如上方範例中的 main.js），切記一定要在 sql-wasm.js 之後引入。\n\n在上一步新建的 JavaScript 程式內寫上：\n/main.js1234567let config = &#123;  // 指定 sql-wasm.wasm 所存放的路徑  locateFile: () =&gt; &quot;./modules/sql-wasm.wasm&quot;,&#125;;initSqlJs(config).then(response =&gt; &#123;  SQL = response;&#125;);\n大功告成！現在你已經可以用 JavaScript 操作資料庫了！\n\n\n如何讀取現有的資料庫","dateCreated":"2022-04-28T20:25:47+08:00","dateModified":"2022-11-30T23:57:13+08:00","datePublished":"2022-04-28T20:25:47+08:00","description":"在 SQL.js 之前，我想先稍稍離題一下。\n最近，我因為《遊戲王：大師決鬥》的推出而回鍋卡牌遊戲了。在不斷抄牌、組牌、打牌的過程中，發現一個非常好用的查卡網站──由 salix5 大大所開發的卡片查詢。\n這個卡片查詢網站是部署在 github.io 網域下的，意即是透過 GitHub-Pages 功能所生成的靜態網頁。但是遊戲王的卡片總數目前已超過一萬種，如此查詢系統勢必要使用到資料庫，照理來說，靜態網頁應該是無法使用資料庫的……吧？\n科技始終來自於人性，於是，SQL.js 誕生了。","headline":"[WIP] 與 SQL.js 的初次見面！","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"},"publisher":{"@type":"Organization","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg","logo":{"@type":"ImageObject","url":"profile.svg"}},"url":"https://donkeybear.github.io/2022/04/first-sight-with-sqljs/","keywords":"SQL, JavaScript"}</script>
     <meta name="description" content="在 SQL.js 之前，我想先稍稍離題一下。 最近，我因為《遊戲王：大師決鬥》的推出而回鍋卡牌遊戲了。在不斷抄牌、組牌、打牌的過程中，發現一個非常好用的查卡網站──由 salix5 大大所開發的卡片查詢。 這個卡片查詢網站是部署在 github.io 網域下的，意即是透過 GitHub-Pages 功能所生成的靜態網頁。但是遊戲王的卡片總數目前已超過一萬種，如此查詢系統勢必要使用到資料庫，照理來說">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="[WIP] 與 SQL.js 的初次見面！">
-<meta property="og:url" content="http://example.com/2022/04/first-sight-with-sqljs/index.html">
+<meta property="og:url" content="https://donkeybear.github.io/2022/04/first-sight-with-sqljs/index.html">
 <meta property="og:site_name" content="爛碼札記">
 <meta property="og:description" content="在 SQL.js 之前，我想先稍稍離題一下。 最近，我因為《遊戲王：大師決鬥》的推出而回鍋卡牌遊戲了。在不斷抄牌、組牌、打牌的過程中，發現一個非常好用的查卡網站──由 salix5 大大所開發的卡片查詢。 這個卡片查詢網站是部署在 github.io 網域下的，意即是透過 GitHub-Pages 功能所生成的靜態網頁。但是遊戲王的卡片總數目前已超過一萬種，如此查詢系統勢必要使用到資料庫，照理來說">
 <meta property="og:locale" content="zh_TW">
@@ -30,7 +32,7 @@
         
     
     
-        <meta property="og:image" content="http://example.com/assets/images/profile.svg"/>
+        <meta property="og:image" content="https://donkeybear.github.io/assets/images/profile.svg"/>
     
     
     
@@ -251,7 +253,7 @@
 <li><p>新建一個 JavaScript 程式，並且在上述 HTML 檔內引入（如上方範例中的 <code>main.js</code>），切記一定要在 <code>sql-wasm.js</code> 之後引入。</p>
 </li>
 <li><p>在上一步新建的 JavaScript 程式內寫上：</p>
-<figure class="highlight js"><figcaption><span>/main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> config = &#123;</span><br><span class="line">  <span class="comment">// 指定 sql-wasm.wasm 所存放的路徑</span></span><br><span class="line">  <span class="attr">locateFile</span>: <span class="function">() =&gt;</span> <span class="string">&quot;./modules/sql-wasm.wasm&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line">initSqlJs(config).then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">  SQL = response;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight js"><figcaption><span>/main.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> config = &#123;</span><br><span class="line">  <span class="comment">// 指定 sql-wasm.wasm 所存放的路徑</span></span><br><span class="line">  <span class="attr">locateFile</span>: <span class="function">() =&gt;</span> <span class="string">&quot;./modules/sql-wasm.wasm&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title function_">initSqlJs</span>(config).<span class="title function_">then</span>(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="variable constant_">SQL</span> = response;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></li>
 <li><p>大功告成！現在你已經可以用 JavaScript 操作資料庫了！</p>
 </li>
 </ol>
@@ -317,7 +319,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/04/first-sight-with-sqljs/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"
                     title="分享到 Facebook"
                     aria-label="分享到 Facebook"
                 >
@@ -330,7 +332,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://example.com/2022/04/first-sight-with-sqljs/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"
                     title="分享到 Twitter"
                     aria-label="分享到 Twitter"
                 >
@@ -343,7 +345,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://example.com/2022/04/first-sight-with-sqljs/"
+                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"
                     title="分享到 LinkedIn"
                     aria-label="分享到 LinkedIn"
                 >
@@ -428,7 +430,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/04/first-sight-with-sqljs/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"
                     title="分享到 Facebook"
                     aria-label="分享到 Facebook"
                 >
@@ -441,7 +443,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://example.com/2022/04/first-sight-with-sqljs/"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"
                     title="分享到 Twitter"
                     aria-label="分享到 Twitter"
                 >
@@ -454,7 +456,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://example.com/2022/04/first-sight-with-sqljs/"
+                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"
                     title="分享到 LinkedIn"
                     aria-label="分享到 LinkedIn"
                 >
@@ -488,7 +490,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=http://example.com/2022/04/first-sight-with-sqljs/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"
                         aria-label="分享到 Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>分享到 Facebook</span>
@@ -501,7 +503,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=http://example.com/2022/04/first-sight-with-sqljs/"
+                        href="https://twitter.com/intent/tweet?text=https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"
                         aria-label="分享到 Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>分享到 Twitter</span>
@@ -514,7 +516,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://example.com/2022/04/first-sight-with-sqljs/"
+                        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://donkeybear.github.io/2022/04/first-sight-with-sqljs/"
                         aria-label="分享到 LinkedIn"
                     >
                         <i class="fab fa-linkedin" aria-hidden="true"></i><span>分享到 LinkedIn</span>
