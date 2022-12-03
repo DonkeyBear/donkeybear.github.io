@@ -11003,6 +11003,8 @@ code {
   .figure .caption {
     font-weight: 200;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+  .figure .fig-img {
+    max-width: 100%; }
 
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
   .sidebar-button-link {
