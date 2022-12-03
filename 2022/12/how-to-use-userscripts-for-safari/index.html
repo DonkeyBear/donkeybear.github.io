@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="爛碼札記">
+    <title>就算是 Safari 也想要用網頁腳本！（iOS/iPadOS/macOS） - 爛碼札記</title>
+    <meta name="author" content="DonkeyBear">
+    
+        <meta name="keywords" content="程式,前端,safari,userscript,userscripts,ios,腳本">
+    
+    
+        <link rel="icon" href="https://donkeybear.github.io/assets/images/favicon.svg">
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg"},"articleBody":"在現代的瀏覽器生態中，使用者腳本（userscript）已經是一種不可或缺的功能，它允許使用者對網頁內容進行更動，如：增加網頁的功能、改變網頁的樣貌等。多數主流瀏覽器早在十多年前就可以透過安裝擴充功能等方式管理及載入使用者腳本，唯獨向來以封閉聞名的蘋果生態專用瀏覽器──Safari，直到最近幾年才在開源社群的推波助瀾下習得這項技能。\n讓我們歡迎今天的主角：Userscripts！\n\n\n\n\n如何使用 UserscriptsUserscripts 是一款專供 Safari 的使用者腳本擴充功能，在 iOS、iPadOS 和 macOS 都可以下載使用，並且目前無任何付費內容，不需購買、訂閱、去廣告，這麼佛心的軟體要上哪找？\n答：App Store。\n\nUserscripts 的 App Store 頁面：https://apps.apple.com/tw/app/id1463298887\n\nUserscripts 的 GitHub 頁面：https://github.com/quoid/userscripts\n\n\n\n\n安裝＆設置 Userscripts接下來我會使用 iPhone 8 來示範如何安裝 Userscripts 以及使用者腳本，在 iPadOS 和 macOS 上的做法也是大同小異。\n\n打開 Userscripts 的 App Store 頁面，點擊「安裝」（由於我的帳號已經安裝過，因此顯示的是雲朵圖案）\nUserscripts 的 App Store 頁面\n安裝完畢後，像開啟一般 App 一樣開啟 Userscripts，點擊「Set Userscripts Directory」\n初次開啟 Userscripts\n接著找個資料夾，將其設為儲存使用者腳本的地方，確認位置後點擊右上角「完成」\n我個人是在「iCloud 雲碟」裡新建了一個名為「Userscripts」的資料夾，方便我所有設備上的腳本同步，供各位參考。\n\n\n「iCloud 雲碟」內的「Userscripts」資料夾\n\n設置完腳本的儲存路徑後，就可以把「Userscripts」的 App 關掉了，並且你在日後的使用中也基本不會再打開了。\n\n打開 iPhone 的「設定」，並在選單內依序點選「Safari」、「延伸功能」、「Userscripts」，進入設定畫面，如圖所示，將「Userscripts」設為開啟、「所有網站」的權限設為「允許」\n「設定」裡的「Userscripts」選單\n打開 Safari，在隨便一個網頁中點選網址列左邊的拼圖小圖示，如果打開的選單裡有「Userscripts」，那麼恭喜！你已經可以開始使用網頁腳本了！\n拼圖小圖示的選單裡有「Userscripts」\n\n安裝腳本做好 Userscripts 的基本設定後，就可以開始下載腳本使用了。\n目前最大宗的腳本資源網站非 GreasyFork 莫屬，這裡囊括了各種你想得到、甚至想不到的腳本，我所使用的大多數腳本也都是從這裡取得的，但如果你喜歡嘗鮮，也可以試試在其他由 Tampermonkey 整理出來的腳本資源網站裡尋寶。\nTampermonkey 是另一款使用者腳本擴充功能，有著十多年歷史的它，功能豐富且成熟，我個人也相當推薦。在電腦端的各種主流瀏覽器上均可使用。\n\n\n現在馬上就開始教大家怎麼從 GreasyFork 上安裝腳本，為了能夠一眼看出是否成功安裝，我選了一個視覺反差較明顯的腳本作為示範：聰明的黑暗模式，這個腳本能夠將亮色背景的網頁轉換為深色模式。\n\n使用 Safari 開啟上面提及的腳本頁面，點擊「安裝腳本」\n「聰明的黑暗模式」的 GreasyFork 頁面\n\n有時候 GreasyFork 沒有偵測到瀏覽器上的腳本管理擴充，就會跳出下圖的提醒視窗，點擊「I already have a user script manager, let me install it!」即可。\nGreasyFork 跳出的提醒視窗\n\n這時候應該會進入一個滿是原始碼的頁面，點擊網址列左側的拼圖小圖示，選擇「Userscripts」\n選擇「Userscripts」\n打開 Userscripts 的介面後，會有一行提示，告訴我們可以安裝此頁的腳本，點擊「Tap to install」\n點擊「Tap to install」\n接著，Userscripts 會告訴我們這個腳本所需要使用到的權限，提醒我們注意安全。往下拉到最底，點擊「Install」\n點擊「Install」\n按下「Install」後，什麼都沒發生嗎？那就是安裝完成了。馬上打開一個沒有深色模式的網站來測試腳本是否能成功運作吧！\n左：原始頁面，右：開啟腳本後\n\n刪除腳本如果安裝完腳本以後，才發現實際用起來不如想像中那樣美好，該如何把腳本刪除呢？\n還記得在安裝 Userscripts 時設置過存放腳本的位置嗎，進入那個位置，找到腳本的檔案後直接刪除即可。\n後記由於使用者腳本的種類眾多，瀏覽器擴充也是五花八門，因此部分腳本裡用到的功能並不是所有瀏覽器都能支援的，雖然有點小小可惜，但是能夠在封閉的 iOS 環境裡使用腳本已經讓我相當感激了。\n如果對 Userscripts 的其他功能還有疑問，也可以到開發者的 GitHub 說明頁看看喔！\n","dateCreated":"2022-12-03T00:21:00+08:00","dateModified":"2022-12-03T15:40:36+08:00","datePublished":"2022-12-03T00:21:00+08:00","description":"在現代的瀏覽器生態中，使用者腳本（userscript）已經是一種不可或缺的功能，它允許使用者對網頁內容進行更動，如：增加網頁的功能、改變網頁的樣貌等。多數主流瀏覽器早在十多年前就可以透過安裝擴充功能等方式管理及載入使用者腳本，唯獨向來以封閉聞名的蘋果生態專用瀏覽器──Safari，直到最近幾年才在開源社群的推波助瀾下習得這項技能。\n讓我們歡迎今天的主角：Userscripts！","headline":"就算是 Safari 也想要用網頁腳本！（iOS/iPadOS/macOS）","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"},"publisher":{"@type":"Organization","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg","logo":{"@type":"ImageObject","url":"profile.svg"}},"url":"https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"}</script>
+    <meta name="description" content="在現代的瀏覽器生態中，使用者腳本（userscript）已經是一種不可或缺的功能，它允許使用者對網頁內容進行更動，如：增加網頁的功能、改變網頁的樣貌等。多數主流瀏覽器早在十多年前就可以透過安裝擴充功能等方式管理及載入使用者腳本，唯獨向來以封閉聞名的蘋果生態專用瀏覽器──Safari，直到最近幾年才在開源社群的推波助瀾下習得這項技能。 讓我們歡迎今天的主角：Userscripts！">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="就算是 Safari 也想要用網頁腳本！（iOS&#x2F;iPadOS&#x2F;macOS）">
+<meta property="og:url" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/index.html">
+<meta property="og:site_name" content="爛碼札記">
+<meta property="og:description" content="在現代的瀏覽器生態中，使用者腳本（userscript）已經是一種不可或缺的功能，它允許使用者對網頁內容進行更動，如：增加網頁的功能、改變網頁的樣貌等。多數主流瀏覽器早在十多年前就可以透過安裝擴充功能等方式管理及載入使用者腳本，唯獨向來以封閉聞名的蘋果生態專用瀏覽器──Safari，直到最近幾年才在開源社群的推波助瀾下習得這項技能。 讓我們歡迎今天的主角：Userscripts！">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/userscripts-apple-store.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/userscripts-app.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/userscripts-directory.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/setting-userscripts.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/safari-with-userscripts.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/smart-dark-mode-page.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/greasyfork-warning-message.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/install-script-1.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/install-script-2.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/install-script-3.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/script-test.webp">
+<meta property="article:published_time" content="2022-12-02T16:21:00.000Z">
+<meta property="article:modified_time" content="2022-12-03T07:40:36.727Z">
+<meta property="article:author" content="DonkeyBear">
+<meta property="article:tag" content="程式">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/userscripts-apple-store.webp">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://donkeybear.github.io/assets/images/profile.svg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-x9pxhagvmmeoxkc69jbkmz44qowofnmhve9pkefwn5wnufdomixt8h9zjhwn.min.css">
+
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JPZ72DS1BW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-JPZ72DS1BW');
+    </script>
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            爛碼札記
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="打開連結: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/profile.svg" alt="作者的圖片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="閱讀有關作者的更多資訊"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.svg" alt="作者的圖片"/>
+                </a>
+                <h4 class="sidebar-profile-name">DonkeyBear</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>不想寫低階語言，只好從前端慢慢往後端爬。<br>短期目標是全端工程師。</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="首頁"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首頁</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="標籤"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">標籤</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="文章"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">文章</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="關於"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">關於</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/DonkeyBear"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            就算是 Safari 也想要用網頁腳本！（iOS/iPadOS/macOS）
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2022-12-03T00:21:00+08:00">
+	
+		    12月 03, 2022
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>在現代的瀏覽器生態中，<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/Userscript">使用者腳本（userscript）</a>已經是一種不可或缺的功能，它允許使用者對網頁內容進行更動，如：增加網頁的功能、改變網頁的樣貌等。多數主流瀏覽器早在十多年前就可以透過安裝擴充功能等方式管理及載入使用者腳本，唯獨向來以封閉聞名的蘋果生態專用瀏覽器──Safari，直到最近幾年才在開源社群的推波助瀾下習得這項技能。</p>
+<p>讓我們歡迎今天的主角：<strong>Userscripts</strong>！</p>
+<span id="more"></span>
+
+<h2 id="table-of-contents">目錄</h2><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Userscripts"><span class="toc-text">如何使用 Userscripts</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%EF%BC%86%E8%A8%AD%E7%BD%AE-Userscripts"><span class="toc-text">安裝＆設置 Userscripts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D%E8%85%B3%E6%9C%AC"><span class="toc-text">安裝腳本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AA%E9%99%A4%E8%85%B3%E6%9C%AC"><span class="toc-text">刪除腳本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%8C%E8%A8%98"><span class="toc-text">後記</span></a></li></ol>
+
+<h2 id="如何使用-Userscripts"><a href="#如何使用-Userscripts" class="headerlink" title="如何使用 Userscripts"></a>如何使用 Userscripts</h2><p>Userscripts 是一款專供 Safari 的使用者腳本擴充功能，在 iOS、iPadOS 和 macOS 都可以下載使用，並且目前無任何付費內容，不需購買、訂閱、去廣告，這麼佛心的軟體要上哪找？</p>
+<p>答：App Store。</p>
+<div class="alert info"><ul>
+<li><p>Userscripts 的 App Store 頁面：<br><a target="_blank" rel="noopener" href="https://apps.apple.com/tw/app/id1463298887">https://apps.apple.com/tw/app/id1463298887</a></p>
+</li>
+<li><p>Userscripts 的 GitHub 頁面：<br><a target="_blank" rel="noopener" href="https://github.com/quoid/userscripts">https://github.com/quoid/userscripts</a></p>
+</li>
+</ul>
+</div>
+
+<h3 id="安裝＆設置-Userscripts"><a href="#安裝＆設置-Userscripts" class="headerlink" title="安裝＆設置 Userscripts"></a>安裝＆設置 Userscripts</h3><p>接下來我會使用 iPhone 8 來示範如何安裝 Userscripts 以及使用者腳本，在 iPadOS 和 macOS 上的做法也是大同小異。</p>
+<ol>
+<li><p>打開 Userscripts 的 App Store 頁面，點擊「安裝」（由於我的帳號已經安裝過，因此顯示的是雲朵圖案）</p>
+<div class="figure center rounded-2 mw-30-rem" style="width:;"><img class="fig-img" src="userscripts-apple-store.webp" alt="Userscripts 的 App Store 頁面"><span class="caption">Userscripts 的 App Store 頁面</span></div></li>
+<li><p>安裝完畢後，像開啟一般 App 一樣開啟 Userscripts，點擊「Set Userscripts Directory」</p>
+<div class="figure center rounded-2 mw-30-rem" style="width:;"><img class="fig-img" src="userscripts-app.webp" alt="初次開啟 Userscripts"><span class="caption">初次開啟 Userscripts</span></div></li>
+<li><p>接著找個資料夾，將其設為儲存使用者腳本的地方，確認位置後點擊右上角「完成」</p>
+<div class="alert info"><p>我個人是在「iCloud 雲碟」裡新建了一個名為「Userscripts」的資料夾，方便我所有設備上的腳本同步，供各位參考。</p>
+</div>
+
+<div class="figure center rounded-2 mw-30-rem" style="width:;"><img class="fig-img" src="userscripts-directory.webp" alt="「iCloud 雲碟」內的「Userscripts」資料夾"><span class="caption">「iCloud 雲碟」內的「Userscripts」資料夾</span></div>
+
+<div class="alert info"><p>設置完腳本的儲存路徑後，就可以把「Userscripts」的 App 關掉了，並且你在日後的使用中也基本不會再打開了。</p>
+</div></li>
+<li><p>打開 iPhone 的「設定」，並在選單內依序點選「Safari」、「延伸功能」、「Userscripts」，進入設定畫面，如圖所示，將「Userscripts」設為開啟、「所有網站」的權限設為「允許」</p>
+<div class="figure center rounded-2 mw-30-rem" style="width:;"><img class="fig-img" src="setting-userscripts.webp" alt="「設定」裡的「Userscripts」選單"><span class="caption">「設定」裡的「Userscripts」選單</span></div></li>
+<li><p>打開 Safari，在隨便一個網頁中點選網址列左邊的拼圖小圖示，如果打開的選單裡有「Userscripts」，那麼恭喜！你已經可以開始使用網頁腳本了！</p>
+<div class="figure center rounded-2 mw-30-rem" style="width:;"><img class="fig-img" src="safari-with-userscripts.webp" alt="拼圖小圖示的選單裡有「Userscripts」"><span class="caption">拼圖小圖示的選單裡有「Userscripts」</span></div></li>
+</ol>
+<h3 id="安裝腳本"><a href="#安裝腳本" class="headerlink" title="安裝腳本"></a>安裝腳本</h3><p>做好 Userscripts 的基本設定後，就可以開始下載腳本使用了。</p>
+<p>目前最大宗的腳本資源網站非 <a target="_blank" rel="noopener" href="https://greasyfork.org/">GreasyFork</a> 莫屬，這裡囊括了各種你想得到、甚至想不到的腳本，我所使用的大多數腳本也都是從這裡取得的，但如果你喜歡嘗鮮，也可以試試在<a target="_blank" rel="noopener" href="https://www.tampermonkey.net/scripts.php">其他由 Tampermonkey 整理出來的腳本資源網站</a>裡尋寶。</p>
+<div class="alert info"><p>Tampermonkey 是另一款使用者腳本擴充功能，有著十多年歷史的它，功能豐富且成熟，我個人也相當推薦。在電腦端的各種主流瀏覽器上均可使用。</p>
+</div>
+
+<p>現在馬上就開始教大家怎麼從 GreasyFork 上安裝腳本，為了能夠一眼看出是否成功安裝，我選了一個視覺反差較明顯的腳本作為示範：<a target="_blank" rel="noopener" href="https://greasyfork.org/zh-TW/scripts/434440-smart-dark-mode">聰明的黑暗模式</a>，這個腳本能夠將亮色背景的網頁轉換為深色模式。</p>
+<ol>
+<li><p>使用 Safari 開啟上面提及的腳本頁面，點擊「安裝腳本」</p>
+<div class="figure center rounded-2 mw-30-rem" style="width:;"><img class="fig-img" src="smart-dark-mode-page.webp" alt="「聰明的黑暗模式」的 GreasyFork 頁面"><span class="caption">「聰明的黑暗模式」的 GreasyFork 頁面</span></div>
+
+<div class="alert warning"><p>有時候 GreasyFork 沒有偵測到瀏覽器上的腳本管理擴充，就會跳出下圖的提醒視窗，點擊「I already have a user script manager, let me install it!」即可。</p>
+<div class="figure center rounded-3 mw-40-rem" style="width:;"><img class="fig-img" src="greasyfork-warning-message.webp" alt="GreasyFork 跳出的提醒視窗"><span class="caption">GreasyFork 跳出的提醒視窗</span></div>
+</div></li>
+<li><p>這時候應該會進入一個滿是原始碼的頁面，點擊網址列左側的拼圖小圖示，選擇「Userscripts」</p>
+<div class="figure center rounded-3 mw-30-rem" style="width:;"><img class="fig-img" src="install-script-1.webp" alt="選擇「Userscripts」"><span class="caption">選擇「Userscripts」</span></div></li>
+<li><p>打開 Userscripts 的介面後，會有一行提示，告訴我們可以安裝此頁的腳本，點擊「Tap to install」</p>
+<div class="figure center rounded-3 mw-30-rem" style="width:;"><img class="fig-img" src="install-script-2.webp" alt="點擊「Tap to install」"><span class="caption">點擊「Tap to install」</span></div></li>
+<li><p>接著，Userscripts 會告訴我們這個腳本所需要使用到的權限，提醒我們注意安全。往下拉到最底，點擊「Install」</p>
+<div class="figure center rounded-3 mw-30-rem" style="width:;"><img class="fig-img" src="install-script-3.webp" alt="點擊「Install」"><span class="caption">點擊「Install」</span></div></li>
+<li><p>按下「Install」後，什麼都沒發生嗎？那就是安裝完成了。馬上打開一個沒有深色模式的網站來測試腳本是否能成功運作吧！</p>
+<div class="figure center rounded-3 mw-60-rem" style="width:;"><img class="fig-img" src="script-test.webp" alt="左：原始頁面，右：開啟腳本後"><span class="caption">左：原始頁面，右：開啟腳本後</span></div></li>
+</ol>
+<h3 id="刪除腳本"><a href="#刪除腳本" class="headerlink" title="刪除腳本"></a>刪除腳本</h3><p>如果安裝完腳本以後，才發現實際用起來不如想像中那樣美好，該如何把腳本刪除呢？</p>
+<p>還記得在<a href="#%E5%AE%89%E8%A3%9D%EF%BC%86%E8%A8%AD%E7%BD%AE-Userscripts">安裝 Userscripts 時</a>設置過存放腳本的位置嗎，進入那個位置，找到腳本的檔案後直接刪除即可。</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>由於使用者腳本的種類眾多，瀏覽器擴充也是五花八門，因此部分腳本裡用到的功能並不是所有瀏覽器都能支援的，雖然有點小小可惜，但是能夠在封閉的 iOS 環境裡使用腳本已經讓我相當感激了。</p>
+<p>如果對 Userscripts 的其他功能還有疑問，也可以到<a target="_blank" rel="noopener" href="https://github.com/quoid/userscripts/blob/master/README.md">開發者的 GitHub 說明頁</a>看看喔！</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/04/first-sight-with-sqljs/"
+                    data-tooltip="[WIP] 與 SQL.js 的初次見面！"
+                    aria-label="下一篇: [WIP] 與 SQL.js 的初次見面！"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"
+                    title="分享到 Facebook"
+                    aria-label="分享到 Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"
+                    title="分享到 Twitter"
+                    aria-label="分享到 Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"
+                    title="分享到 LinkedIn"
+                    aria-label="分享到 LinkedIn"
+                >
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目錄">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2022 DonkeyBear. All Rights Reserved.
+    </span>
+</footer>
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/04/first-sight-with-sqljs/"
+                    data-tooltip="[WIP] 與 SQL.js 的初次見面！"
+                    aria-label="下一篇: [WIP] 與 SQL.js 的初次見面！"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"
+                    title="分享到 Facebook"
+                    aria-label="分享到 Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"
+                    title="分享到 Twitter"
+                    aria-label="分享到 Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"
+                    title="分享到 LinkedIn"
+                    aria-label="分享到 LinkedIn"
+                >
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目錄">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"
+                        aria-label="分享到 Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>分享到 Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"
+                        aria-label="分享到 Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>分享到 Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://donkeybear.github.io/2022/12/how-to-use-userscripts-for-safari/"
+                        aria-label="分享到 LinkedIn"
+                    >
+                        <i class="fab fa-linkedin" aria-hidden="true"></i><span>分享到 LinkedIn</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.svg" alt="作者的圖片"/>
+        
+            <h4 id="about-card-name">DonkeyBear</h4>
+        
+            <div id="about-card-bio"><p>不想寫低階語言，只好從前端慢慢往後端爬。<br>短期目標是全端工程師。</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>學生 / 前端工程師（接案）</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.webp');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-h5pbiohrtla37owlg8ijxnvvmzkjyyycq0w6ihiy0zslpqvnpigkbdjlqueg.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
