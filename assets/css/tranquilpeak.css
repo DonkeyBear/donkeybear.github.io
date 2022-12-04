@@ -3033,10 +3033,14 @@ code {
 .figure.rounded-4 .fig-img {
   border-radius: 1rem; }
 
+@media only screen and (max-width: 479px) {
+  .figure.mw-100-xs .fig-img {
+    max-width: 100%; } }
+
 @media only screen and (max-width: 767px) {
-  .figure.mw-100-sm {
+  .figure.mw-100-sm .fig-img {
     max-width: 100%; } }
 
 @media only screen and (max-width: 1023px) {
-  .figure.mw-100-md {
+  .figure.mw-100-md .fig-img {
     max-width: 100%; } }
