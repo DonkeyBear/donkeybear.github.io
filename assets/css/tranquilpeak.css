@@ -3032,3 +3032,11 @@ code {
 
 .figure.rounded-4 .fig-img {
   border-radius: 1rem; }
+
+@media only screen and (max-width: 767px) {
+  .figure.mw-100-sm {
+    max-width: 100%; } }
+
+@media only screen and (max-width: 1023px) {
+  .figure.mw-100-md {
+    max-width: 100%; } }
