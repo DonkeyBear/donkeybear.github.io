@@ -1,0 +1,640 @@
+
+<!DOCTYPE html>
+<html lang="zh-tw">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="爛碼札記">
+    <title>嘗試復刻《魔鬼計算》 - 爛碼札記</title>
+    <meta name="author" content="DonkeyBear">
+    
+        <meta name="keywords" content="程式,前端,魔鬼鍛鍊,腦鍛鍊,魔鬼計算">
+    
+    
+        <link rel="icon" href="https://donkeybear.github.io/assets/images/favicon.svg">
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg"},"articleBody":"我第一次接觸《腦鍛鍊》系列大約是七、八年前，雖然更早之前就已經聽聞過 NDS 上的系列作，但是這種益智遊戲實在是無法讓年幼的我提起興致，於是直到 3DS 上的《腦科學專家川島隆太博士監修 突破極限 腦的五分鐘魔鬼鍛鍊》（全名超級長，以下以《魔鬼鍛鍊》簡稱之）有了官方中文，才在好奇心驅使下開始遊戲。\n此前 NDS 上的《腦鍛鍊》系列作多是圍繞「防止大腦老化」作為核心進行設計，比起遊戲更像是應用程式。相較之下，3DS 上的《魔鬼鍛鍊》則更好的將訓練過程遊戲化，設計方向側重於加強工作記憶，鼓勵玩家每天進行五分鐘的高強度鍛鍊。\n五分鐘，聽起來很容易對吧？\n當然不對啊！魔鬼鍛鍊就像健身中的平板支撐（Plank），只有親身體驗過才會知道看似輕鬆過程中的苦澀，為了給予這個世界痛楚，我決定對其中最具有代表性的單元《魔鬼計算》進行 Web 版復刻。\n\n\n在查資料的過程中，意外發現這篇文章（简单的魔鬼计算），真是沒想到會發現有人跟我一樣在這款遊戲發售（2012 年）的十年後以復刻的方式致敬，有興趣的朋友可以參考看看。\n\n\n\n\n什麼是魔鬼計算？魔鬼計算是一連串的計算問題（二十多題，依照玩家個人進度有所不同），問題本身相當簡單，都是個位數的加減，其中的難點在於「回溯」。\n原作裡的解說\n\n在「一次只顯示一題」的前提下，「N 回溯」代表玩家需要看著當前的問題做計算，記下答案的同時回答 N 題前的答案，遊戲會從「1 回溯」開始，當正確率高於 85% 以上就會以「N 回溯 → 快速 N 回溯 → N + 1 回溯」的順序逐漸提高難度，正確率 65% 以下則會降低難度。\n原作裡的示範說明\n\n經過上面說明，如果還是看不懂、不覺得難，歡迎直接移步至最終成品。\n出題規則開始寫程式之前，需要先釐清原版魔鬼計算的出題規則，經過觀察以後，可以得出以下幾點：\n\n題目需要 A、B 兩個數字\nA、B 皆為個位正整數或 0\n可能是 A + B 或 A - B\n計算後的答案也會是個位正整數或 0\n\n程式實作筆記這次我打算使用 CDN 引入 Vue 3，因為規模不大，所以不需拆分元件，也適合用我較熟悉的 Options API 編寫；CSS 部分則是使用 Pico.css 以保持輕便與 HTML 的簡潔（雖然我也愛用 Bootstrap，但是那成堆的 Class 真的看了很心煩），其餘不足的樣式、特效、元件再自己手刻補上。\n出題邏輯設計來說說我對於出題的邏輯設計。\n參照出題規則，我認為從答案開始生成後回推題目會是較好的選擇，先隨機生成一個整數 ans（0 ≤ ans ≤ 9）作為答案，接著生成另一個整數 num1（0 ≤ num1 ≤ 9）。如果 ans &gt; num1，代表 ans 是由 num1 加上另一數（num2）組成，以 ans - num1 即可得到 num2；若 ans &lt;= num1 則表示 ans 為另一數減去 num1 的結果，改以 num1 - ans 取得 num2。\n附上程式碼片段供各位參考：\n123456789101112let ans = this.randInt(0, 10);let num1 = this.randInt(0, 10);let num2;let oprator;if (ans &gt; num1) &#123;  oprator = &#x27;＋&#x27;;  num2 = ans - num1;&#125; else &#123;  oprator = &#x27;－&#x27;;  num2 = num1 - ans;&#125;// 最終輸出為 `$&#123;num1&#125;$&#123;oprator&#125;$&#123;num2&#125;＝$&#123;ans&#125;`\n\n遊戲體驗很重要出完題目後，將題目顯示於畫面上，透過 Vue 提供的模板語法可以很輕易的做到這件事，但在這之上，別忘了這是款遊戲，身為一個業餘級遊戲設計師學徒，我在乎每個玩家的遊戲體驗，所以接下來要做的會比「單純把一串算式丟到畫面上」來得多一些。\n接下來的內容單看文字可能不太容易理解，建議與最終成品對照著看。\n\n\n文字寬度不均我首先注意到的是文字大小的問題，在大部分字型裡，每個文字的寬度和間距並不是相等的，例如數字「1」通常會比其他數字細，這就會造成每次題目的內容更動時因為寬度不等而造成的版面抖動問題。如果希望每個題目中的數字和運算子的位置都能保持不變，最簡單直覺的方法就是換用等寬字型，但是大多等寬字型都是為了顯示程式碼而設計，放到網頁上使用大字體時會明顯讓畫面缺少美感，因此取而代之的方案是使用全形文字來保持等寬，在 Pico.css 的預設字型之下，全形數字和運算子的顯示效果相當不錯。\n使用半形文字時會發生的排版悲劇\n\n空間規劃大師解決文字寬度不均的問題後，算式不管怎麼變換題目都不會再左右抖動了，乾淨又漂亮。不過這是一行算式的情況。\n在《魔鬼計算》裡，畫面一次會有上、下兩行算式，我希望這兩行算式（包括算式前的題號區塊）都能完全對齊，在這個情況下比較難處理的部分是題號長度，題號的長度相當不固定，可能會隨著玩家的遊戲進度到達二位數甚至三位數，在這樣的情況下，即便上下兩行都完全置中，彼此之間依然不能垂直對齊。\n對此，我的解決方案是……（此處應有小鼓滾奏聲）&lt;table&gt;！\n說到上下兩行必須相互垂直對齊，我（在經歷 Grid 和 Flex 的失敗後）首先想到的就是表格，表格這個東西啊，不說你不知道，一用了它真奇妙，只要適當加入空白欄位、隱藏格線，並且巧妙使用 padding 做細節調整，在很多場合能夠勝任你意想不到的排版工作（當然能用 Flex 的情況下我還是會優先考慮 Flex 啦，嘿嘿）。\n在「全形文字」和「表格排版」的雙重攻勢之下，就算是難搞的 UI 也只得敗下陣來。\n顯示格線後，為 5 * 2 的表格\n\n為手機用戶最佳化——虛擬鍵盤打從一開始，我就希望這個遊戲能夠做成 RWD 的規格，原因很簡單：現在是 2023 年，所有想要得到曝光的東西都該有手機版。\n包含上一小節提到的 &lt;table&gt; 排版術也是為了能在各種裝置上漂亮呈現而選用，不過，除了畫面呈現之外，電腦和手機在操作方式上也有著莫大的差別，好在這次的遊戲只需要輸入數字鍵，那麼就來做個虛擬數字鍵盤吧！\n主要透過 Flex 來簡單排版，再用 position: fixed、bottom: 0 把數字鍵盤固定於畫面下方，最後加上 @media 規則，讓虛擬鍵盤僅於手機畫面上出現。\n想參考完整 CSS 的朋友請移步至 GitHub。\n\n\n將樣式完善後，該來為虛擬鍵盤加上功能了。\n由於此時我已經寫好電腦版的按鍵輸入函式，如果為了相容虛擬鍵盤而共用同一個函式，會需要大規模修改，程式碼也會變得很不漂亮。因此我在第一時間的打算是寫一個新函式專供虛擬鍵盤使用，但是這麼一來新、舊函式又會有大量相似或重複的程式碼片段，後續維護時也必須分別更動，顯然也不是一個太聰明的寫法。我在幾經琢磨後靈光一閃：「虛擬鍵盤……鍵盤……啊！關鍵就是鍵盤！」，如果直接把虛擬鍵盤上的鍵映射到實體鍵盤上的按鍵輸入，那不就解決了嗎：\n123456// 寫在 methods 裡面simulateKeydown (keydown = &#x27;&#x27;) &#123;  // 建立一個新的 keydown event 並觸發  window.dispatchEvent(new KeyboardEvent(&#x27;keydown&#x27;, &#123; key: keydown &#125;));&#125;// 在按鍵「1」加上 ＠click=&quot;simulateKeydown(&#x27;1&#x27;)&quot;，以此類推\n\n最終成品\n魔鬼計算：https://donkeybear.github.io/webapp/devilish-calculations/v1/\nGitHub Repo：https://github.com/DonkeyBear/webapp/tree/main/devilish-calculations/v1\n\n\n\n最終成品（手機版）\n\n小結這次的小遊戲規模不大，但前前後後也花了我幾天才順利完成。\n這個 Web 版復刻相較原版少了幾樣功能：\n\n計時器\n題目變動時的捲軸動畫\n每題的時間限制\n根據正確率調整回溯數\n\n這些功能其實不是做不到，而是涉及太多遊戲設計層面的問題（除了捲軸動畫），尤其是數值，例如要幫每題加上時間限制，就必須先知道原作裡對於時間限制的計算規則，如果不知道，就只能自己照著實機畫面算幀數；或者要根據正確率調整回溯數，但是卻無從得知原作關於題目數量的計算公式（原作根據玩家進度會有不同數量的題目）。基於種種因素，無法達到百分之百還原，不過我仍然在能力可及的範圍內十分逼近原作了，總體而言，我對於這次的復刻還是相當滿意，也許之後有空會考慮復刻《魔鬼鍛鍊》的其他項目。\n結尾再聊一下《魔鬼鍛鍊》3DS 上的《魔鬼鍛鍊》真的是一款蠻不錯的遊戲，我自己斷斷續續玩了一段時間，對於工作記憶的提升還蠻有感的（當然也不排除是我原本程度太差才這麼有感啦）。裡面除了本篇實作的《魔鬼計算》外，還有許多諸如《魔鬼翻牌》、《魔鬼朗讀》等不同鍛鍊項目，雖然痛苦，但也相當有趣，如果現在手邊還有 3DS 的朋友不妨入手一片來玩玩看。\n","dateCreated":"2023-03-11T18:00:00+08:00","dateModified":"2023-03-11T19:16:36+08:00","datePublished":"2023-03-11T18:00:00+08:00","description":"我第一次接觸《腦鍛鍊》系列大約是七、八年前，雖然更早之前就已經聽聞過 NDS 上的系列作，但是這種益智遊戲實在是無法讓年幼的我提起興致，於是直到 3DS 上的《腦科學專家川島隆太博士監修 突破極限 腦的五分鐘魔鬼鍛鍊》（全名超級長，以下以《魔鬼鍛鍊》簡稱之）有了官方中文，才在好奇心驅使下開始遊戲。\n此前 NDS 上的《腦鍛鍊》系列作多是圍繞「防止大腦老化」作為核心進行設計，比起遊戲更像是應用程式。相較之下，3DS 上的《魔鬼鍛鍊》則更好的將訓練過程遊戲化，設計方向側重於加強工作記憶，鼓勵玩家每天進行五分鐘的高強度鍛鍊。\n五分鐘，聽起來很容易對吧？\n當然不對啊！魔鬼鍛鍊就像健身中的平板支撐（Plank），只有親身體驗過才會知道看似輕鬆過程中的苦澀，為了給予這個世界痛楚，我決定對其中最具有代表性的單元《魔鬼計算》進行 Web 版復刻。","headline":"嘗試復刻《魔鬼計算》","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"},"publisher":{"@type":"Organization","name":"DonkeyBear","sameAs":["https://github.com/DonkeyBear"],"image":"profile.svg","logo":{"@type":"ImageObject","url":"profile.svg"}},"url":"https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/","keywords":"JavaScript, 遊戲"}</script>
+    <meta name="description" content="我第一次接觸《腦鍛鍊》系列大約是七、八年前，雖然更早之前就已經聽聞過 NDS 上的系列作，但是這種益智遊戲實在是無法讓年幼的我提起興致，於是直到 3DS 上的《腦科學專家川島隆太博士監修 突破極限 腦的五分鐘魔鬼鍛鍊》（全名超級長，以下以《魔鬼鍛鍊》簡稱之）有了官方中文，才在好奇心驅使下開始遊戲。 此前 NDS 上的《腦鍛鍊》系列作多是圍繞「防止大腦老化」作為核心進行設計，比起遊戲更像是應用程式。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="嘗試復刻《魔鬼計算》">
+<meta property="og:url" content="https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/index.html">
+<meta property="og:site_name" content="爛碼札記">
+<meta property="og:description" content="我第一次接觸《腦鍛鍊》系列大約是七、八年前，雖然更早之前就已經聽聞過 NDS 上的系列作，但是這種益智遊戲實在是無法讓年幼的我提起興致，於是直到 3DS 上的《腦科學專家川島隆太博士監修 突破極限 腦的五分鐘魔鬼鍛鍊》（全名超級長，以下以《魔鬼鍛鍊》簡稱之）有了官方中文，才在好奇心驅使下開始遊戲。 此前 NDS 上的《腦鍛鍊》系列作多是圍繞「防止大腦老化」作為核心進行設計，比起遊戲更像是應用程式。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/tutorial-1.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/tutorial-2.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/when-halfwidth.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/layout-with-visible-border.webp">
+<meta property="og:image" content="https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/final-product.webp">
+<meta property="article:published_time" content="2023-03-11T10:00:00.000Z">
+<meta property="article:modified_time" content="2023-03-11T11:16:36.675Z">
+<meta property="article:author" content="DonkeyBear">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="遊戲">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/tutorial-1.webp">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="https://donkeybear.github.io/assets/images/profile.svg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-gdthnpknwsjbhy7vmdo47nt1kmtobtyjgxwkkwct8hse9wkshmhzb4pgf0kt.min.css">
+
+    <!--STYLES END-->
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JPZ72DS1BW"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-JPZ72DS1BW');
+    </script>
+
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="5">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            爛碼札記
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="打開連結: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/profile.svg" alt="作者的圖片"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="5">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="閱讀有關作者的更多資訊"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/profile.svg" alt="作者的圖片"/>
+                </a>
+                <h4 class="sidebar-profile-name">DonkeyBear</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>不想寫低階語言，只好從前端慢慢往後端爬。<br>短期目標是全端工程師。</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="首頁"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">首頁</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="標籤"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">標籤</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="文章"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">文章</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="關於"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">關於</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/DonkeyBear"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="5"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            嘗試復刻《魔鬼計算》
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2023-03-11T18:00:00+08:00">
+	
+		    3月 11, 2023
+    	
+    </time>
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>我第一次接觸《腦鍛鍊》系列大約是七、八年前，雖然更早之前就已經聽聞過 NDS 上的系列作，但是這種益智遊戲實在是無法讓年幼的我提起興致，於是直到 3DS 上的《腦科學專家川島隆太博士監修 突破極限 腦的五分鐘魔鬼鍛鍊》（全名超級長，以下以《魔鬼鍛鍊》簡稱之）有了官方中文，才在好奇心驅使下開始遊戲。</p>
+<p>此前 NDS 上的《腦鍛鍊》系列作多是圍繞「防止大腦老化」作為核心進行設計，比起遊戲更像是應用程式。相較之下，3DS 上的《魔鬼鍛鍊》則更好的將訓練過程遊戲化，設計方向側重於加強工作記憶，鼓勵玩家每天進行五分鐘的高強度鍛鍊。</p>
+<p>五分鐘，聽起來很容易對吧？</p>
+<p>當然不對啊！魔鬼鍛鍊就像健身中的平板支撐（Plank），只有親身體驗過才會知道看似輕鬆過程中的苦澀，為了給予這個世界痛楚，我決定對其中最具有代表性的單元《魔鬼計算》進行 Web 版復刻。</p>
+<span id="more"></span>
+
+<div class="alert info"><p>在查資料的過程中，意外發現<a target="_blank" rel="noopener" href="https://emptystack.top/simple-devilish-calculatons/">這篇文章（简单的魔鬼计算）</a>，真是沒想到會發現有人跟我一樣在這款遊戲發售（2012 年）的十年後以復刻的方式致敬，有興趣的朋友可以參考看看。</p>
+</div>
+
+<h2 id="table-of-contents">目錄</h2><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E9%AD%94%E9%AC%BC%E8%A8%88%E7%AE%97%EF%BC%9F"><span class="toc-text">什麼是魔鬼計算？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BA%E9%A1%8C%E8%A6%8F%E5%89%87"><span class="toc-text">出題規則</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BC%8F%E5%AF%A6%E4%BD%9C%E7%AD%86%E8%A8%98"><span class="toc-text">程式實作筆記</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BA%E9%A1%8C%E9%82%8F%E8%BC%AF%E8%A8%AD%E8%A8%88"><span class="toc-text">出題邏輯設計</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%8A%E6%88%B2%E9%AB%94%E9%A9%97%E5%BE%88%E9%87%8D%E8%A6%81"><span class="toc-text">遊戲體驗很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E5%AD%97%E5%AF%AC%E5%BA%A6%E4%B8%8D%E5%9D%87"><span class="toc-text">文字寬度不均</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E9%96%93%E8%A6%8F%E5%8A%83%E5%A4%A7%E5%B8%AB"><span class="toc-text">空間規劃大師</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%82%BA%E6%89%8B%E6%A9%9F%E7%94%A8%E6%88%B6%E6%9C%80%E4%BD%B3%E5%8C%96%E2%80%94%E2%80%94%E8%99%9B%E6%93%AC%E9%8D%B5%E7%9B%A4"><span class="toc-text">為手機用戶最佳化——虛擬鍵盤</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E7%B5%82%E6%88%90%E5%93%81"><span class="toc-text">最終成品</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%B5%90"><span class="toc-text">小結</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B5%90%E5%B0%BE%E5%86%8D%E8%81%8A%E4%B8%80%E4%B8%8B%E3%80%8A%E9%AD%94%E9%AC%BC%E9%8D%9B%E9%8D%8A%E3%80%8B"><span class="toc-text">結尾再聊一下《魔鬼鍛鍊》</span></a></li></ol>
+
+<h2 id="什麼是魔鬼計算？"><a href="#什麼是魔鬼計算？" class="headerlink" title="什麼是魔鬼計算？"></a>什麼是魔鬼計算？</h2><p>魔鬼計算是一連串的計算問題（二十多題，依照玩家個人進度有所不同），問題本身相當簡單，都是個位數的加減，其中的難點在於「回溯」。</p>
+<div class="figure center" style="width:;"><img class="fig-img" src="tutorial-1.webp" alt="原作裡的解說"><span class="caption">原作裡的解說</span></div>
+
+<p>在「一次只顯示一題」的前提下，「N 回溯」代表玩家需要看著當前的問題做計算，記下答案的同時回答 N 題前的答案，遊戲會從「1 回溯」開始，當正確率高於 85% 以上就會以「N 回溯 → 快速 N 回溯 → N + 1 回溯」的順序逐漸提高難度，正確率 65% 以下則會降低難度。</p>
+<div class="figure center" style="width:;"><img class="fig-img" src="tutorial-2.webp" alt="原作裡的示範說明"><span class="caption">原作裡的示範說明</span></div>
+
+<p>經過上面說明，如果還是看不懂、不覺得難，歡迎直接移步至<a href="#%E6%9C%80%E7%B5%82%E6%88%90%E5%93%81">最終成品</a>。</p>
+<h2 id="出題規則"><a href="#出題規則" class="headerlink" title="出題規則"></a>出題規則</h2><p>開始寫程式之前，需要先釐清原版魔鬼計算的出題規則，經過觀察以後，可以得出以下幾點：</p>
+<ul>
+<li>題目需要 <code>A</code>、<code>B</code> 兩個數字</li>
+<li><code>A</code>、<code>B</code> 皆為個位正整數或 <code>0</code></li>
+<li>可能是 <code>A + B</code> 或 <code>A - B</code></li>
+<li>計算後的答案也會是個位正整數或 <code>0</code></li>
+</ul>
+<h2 id="程式實作筆記"><a href="#程式實作筆記" class="headerlink" title="程式實作筆記"></a>程式實作筆記</h2><p>這次我打算使用 CDN 引入 Vue 3，因為規模不大，所以不需拆分元件，也適合用我較熟悉的 Options API 編寫；CSS 部分則是使用 <a target="_blank" rel="noopener" href="https://picocss.com/">Pico.css</a> 以保持輕便與 HTML 的簡潔（雖然我也愛用 Bootstrap，但是那成堆的 Class 真的看了很心煩），其餘不足的樣式、特效、元件再自己手刻補上。</p>
+<h3 id="出題邏輯設計"><a href="#出題邏輯設計" class="headerlink" title="出題邏輯設計"></a>出題邏輯設計</h3><p>來說說我對於出題的邏輯設計。</p>
+<p>參照<a href="#%E5%87%BA%E9%A1%8C%E8%A6%8F%E5%89%87">出題規則</a>，我認為從答案開始生成後回推題目會是較好的選擇，先隨機生成一個整數 <code>ans</code>（<code>0 ≤ ans ≤ 9</code>）作為答案，接著生成另一個整數 <code>num1</code>（<code>0 ≤ num1 ≤ 9</code>）。如果 <code>ans &gt; num1</code>，代表 <code>ans</code> 是由 <code>num1</code> 加上另一數（<code>num2</code>）組成，以 <code>ans - num1</code> 即可得到 <code>num2</code>；若 <code>ans &lt;= num1</code> 則表示 <code>ans</code> 為另一數減去 <code>num1</code> 的結果，改以 <code>num1 - ans</code> 取得 <code>num2</code>。</p>
+<p>附上程式碼片段供各位參考：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> ans = <span class="variable language_">this</span>.<span class="title function_">randInt</span>(<span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line"><span class="keyword">let</span> num1 = <span class="variable language_">this</span>.<span class="title function_">randInt</span>(<span class="number">0</span>, <span class="number">10</span>);</span><br><span class="line"><span class="keyword">let</span> num2;</span><br><span class="line"><span class="keyword">let</span> oprator;</span><br><span class="line"><span class="keyword">if</span> (ans &gt; num1) &#123;</span><br><span class="line">  oprator = <span class="string">&#x27;＋&#x27;</span>;</span><br><span class="line">  num2 = ans - num1;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  oprator = <span class="string">&#x27;－&#x27;</span>;</span><br><span class="line">  num2 = num1 - ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 最終輸出為 `$&#123;num1&#125;$&#123;oprator&#125;$&#123;num2&#125;＝$&#123;ans&#125;`</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="遊戲體驗很重要"><a href="#遊戲體驗很重要" class="headerlink" title="遊戲體驗很重要"></a>遊戲體驗很重要</h3><p>出完題目後，將題目顯示於畫面上，透過 Vue 提供的模板語法可以很輕易的做到這件事，但在這之上，別忘了這是款遊戲，身為一個業餘級遊戲設計師學徒，我在乎每個玩家的遊戲體驗，所以接下來要做的會比「單純把一串算式丟到畫面上」來得多一些。</p>
+<div class="alert info"><p>接下來的內容單看文字可能不太容易理解，建議與<a href="#%E6%9C%80%E7%B5%82%E6%88%90%E5%93%81">最終成品</a>對照著看。</p>
+</div>
+
+<h3 id="文字寬度不均"><a href="#文字寬度不均" class="headerlink" title="文字寬度不均"></a>文字寬度不均</h3><p>我首先注意到的是文字大小的問題，在大部分字型裡，每個文字的寬度和間距並不是相等的，例如數字「1」通常會比其他數字細，這就會造成每次題目的內容更動時因為寬度不等而造成的版面抖動問題。如果希望每個題目中的數字和運算子的位置都能保持不變，最簡單直覺的方法就是換用等寬字型，但是大多等寬字型都是為了顯示程式碼而設計，放到網頁上使用大字體時會明顯讓畫面缺少美感，因此取而代之的方案是使用全形文字來保持等寬，在 Pico.css 的預設字型之下，全形數字和運算子的顯示效果相當不錯。</p>
+<div class="figure center" style="width:;"><img class="fig-img" src="when-halfwidth.webp" alt="使用半形文字時會發生的排版悲劇"><span class="caption">使用半形文字時會發生的排版悲劇</span></div>
+
+<h3 id="空間規劃大師"><a href="#空間規劃大師" class="headerlink" title="空間規劃大師"></a>空間規劃大師</h3><p>解決文字寬度不均的問題後，算式不管怎麼變換題目都不會再左右抖動了，乾淨又漂亮。不過這是一行算式的情況。</p>
+<p>在《魔鬼計算》裡，畫面一次會有上、下兩行算式，我希望這兩行算式（包括算式前的題號區塊）都能完全對齊，在這個情況下比較難處理的部分是題號長度，題號的長度相當不固定，可能會隨著玩家的遊戲進度到達二位數甚至三位數，在這樣的情況下，即便上下兩行都完全置中，彼此之間依然不能垂直對齊。</p>
+<p>對此，我的解決方案是……（此處應有小鼓滾奏聲）<code>&lt;table&gt;</code>！</p>
+<p>說到上下兩行必須相互垂直對齊，我（在經歷 Grid 和 Flex 的失敗後）首先想到的就是表格，表格這個東西啊，不說你不知道，一用了它真奇妙，只要適當加入空白欄位、隱藏格線，並且巧妙使用 <code>padding</code> 做細節調整，在很多場合能夠勝任你意想不到的排版工作（當然能用 Flex 的情況下我還是會優先考慮 Flex 啦，嘿嘿）。</p>
+<p>在「全形文字」和「表格排版」的雙重攻勢之下，就算是難搞的 UI 也只得敗下陣來。</p>
+<div class="figure center" style="width:;"><img class="fig-img" src="layout-with-visible-border.webp" alt="顯示格線後，為 5 * 2 的表格"><span class="caption">顯示格線後，為 5 * 2 的表格</span></div>
+
+<h3 id="為手機用戶最佳化——虛擬鍵盤"><a href="#為手機用戶最佳化——虛擬鍵盤" class="headerlink" title="為手機用戶最佳化——虛擬鍵盤"></a>為手機用戶最佳化——虛擬鍵盤</h3><p>打從一開始，我就希望這個遊戲能夠做成 RWD 的規格，原因很簡單：現在是 2023 年，所有想要得到曝光的東西都該有手機版。</p>
+<p>包含上一小節提到的 <code>&lt;table&gt;</code> 排版術也是為了能在各種裝置上漂亮呈現而選用，不過，除了畫面呈現之外，電腦和手機在操作方式上也有著莫大的差別，好在這次的遊戲只需要輸入數字鍵，那麼就來做個虛擬數字鍵盤吧！</p>
+<p>主要透過 Flex 來簡單排版，再用 <code>position: fixed</code>、<code>bottom: 0</code> 把數字鍵盤固定於畫面下方，最後加上 <code>@media</code> 規則，讓虛擬鍵盤僅於手機畫面上出現。</p>
+<div class="alert info"><p>想參考完整 CSS 的朋友請移步至 <a target="_blank" rel="noopener" href="https://github.com/DonkeyBear/webapp/blob/main/devilish-calculations/v1/style.css">GitHub</a>。</p>
+</div>
+
+<p>將樣式完善後，該來為虛擬鍵盤加上功能了。</p>
+<p>由於此時我已經寫好電腦版的按鍵輸入函式，如果為了相容虛擬鍵盤而共用同一個函式，會需要大規模修改，程式碼也會變得很不漂亮。因此我在第一時間的打算是寫一個新函式專供虛擬鍵盤使用，但是這麼一來新、舊函式又會有大量相似或重複的程式碼片段，後續維護時也必須分別更動，顯然也不是一個太聰明的寫法。我在幾經琢磨後靈光一閃：「虛擬鍵盤……鍵盤……啊！關鍵就是鍵盤！」，如果直接把虛擬鍵盤上的鍵映射到實體鍵盤上的按鍵輸入，那不就解決了嗎：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 寫在 methods 裡面</span></span><br><span class="line">simulateKeydown (keydown = <span class="string">&#x27;&#x27;</span>) &#123;</span><br><span class="line">  <span class="comment">// 建立一個新的 keydown event 並觸發</span></span><br><span class="line">  <span class="variable language_">window</span>.<span class="title function_">dispatchEvent</span>(<span class="keyword">new</span> <span class="title class_">KeyboardEvent</span>(<span class="string">&#x27;keydown&#x27;</span>, &#123; <span class="attr">key</span>: keydown &#125;));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在按鍵「1」加上 ＠click=&quot;simulateKeydown(&#x27;1&#x27;)&quot;，以此類推</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="最終成品"><a href="#最終成品" class="headerlink" title="最終成品"></a>最終成品</h2><div class="alert info"><ul>
+<li>魔鬼計算：<a href="https://donkeybear.github.io/webapp/devilish-calculations/v1/">https://donkeybear.github.io/webapp/devilish-calculations/v1/</a></li>
+<li>GitHub Repo：<a target="_blank" rel="noopener" href="https://github.com/DonkeyBear/webapp/tree/main/devilish-calculations/v1">https://github.com/DonkeyBear/webapp/tree/main/devilish-calculations/v1</a></li>
+</ul>
+</div>
+
+<div class="figure center" style="width:;"><img class="fig-img" src="final-product.webp" alt="最終成品（手機版）"><span class="caption">最終成品（手機版）</span></div>
+
+<h2 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h2><p>這次的小遊戲規模不大，但前前後後也花了我幾天才順利完成。</p>
+<p>這個 Web 版復刻相較原版少了幾樣功能：</p>
+<ul>
+<li>計時器</li>
+<li>題目變動時的捲軸動畫</li>
+<li>每題的時間限制</li>
+<li>根據正確率調整回溯數</li>
+</ul>
+<p>這些功能其實不是做不到，而是涉及太多遊戲設計層面的問題（除了捲軸動畫），尤其是數值，例如要幫每題加上時間限制，就必須先知道原作裡對於時間限制的計算規則，如果不知道，就只能自己照著實機畫面算幀數；或者要根據正確率調整回溯數，但是卻無從得知原作關於題目數量的計算公式（原作根據玩家進度會有不同數量的題目）。基於種種因素，無法達到百分之百還原，不過我仍然在能力可及的範圍內十分逼近原作了，總體而言，我對於這次的復刻還是相當滿意，也許之後有空會考慮復刻《魔鬼鍛鍊》的其他項目。</p>
+<h2 id="結尾再聊一下《魔鬼鍛鍊》"><a href="#結尾再聊一下《魔鬼鍛鍊》" class="headerlink" title="結尾再聊一下《魔鬼鍛鍊》"></a>結尾再聊一下《魔鬼鍛鍊》</h2><p>3DS 上的《魔鬼鍛鍊》真的是一款蠻不錯的遊戲，我自己斷斷續續玩了一段時間，對於工作記憶的提升還蠻有感的（當然也不排除是我原本程度太差才這麼有感啦）。裡面除了本篇實作的《魔鬼計算》外，還有許多諸如《魔鬼翻牌》、《魔鬼朗讀》等不同鍛鍊項目，雖然痛苦，但也相當有趣，如果現在手邊還有 3DS 的朋友不妨入手一片來玩玩看。</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">標籤</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/JavaScript/" rel="tag">JavaScript</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/%E9%81%8A%E6%88%B2/" rel="tag">遊戲</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/12/how-to-use-userscripts-for-safari/"
+                    data-tooltip="就算是 Safari 也想要用網頁腳本！（iOS/iPadOS/macOS）"
+                    aria-label="下一篇: 就算是 Safari 也想要用網頁腳本！（iOS/iPadOS/macOS）"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Diesen Beitrag teilen"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"
+                    title="分享到 Facebook"
+                    aria-label="分享到 Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"
+                    title="分享到 Twitter"
+                    aria-label="分享到 Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"
+                    title="分享到 LinkedIn"
+                    aria-label="分享到 LinkedIn"
+                >
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目錄">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2023 DonkeyBear. All Rights Reserved.
+    </span>
+</footer>
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="5">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2022/12/how-to-use-userscripts-for-safari/"
+                    data-tooltip="就算是 Safari 也想要用網頁腳本！（iOS/iPadOS/macOS）"
+                    aria-label="下一篇: 就算是 Safari 也想要用網頁腳本！（iOS/iPadOS/macOS）"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Diesen Beitrag teilen"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"
+                    title="分享到 Facebook"
+                    aria-label="分享到 Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"
+                    title="分享到 Twitter"
+                    aria-label="分享到 Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"
+                    title="分享到 LinkedIn"
+                    aria-label="分享到 LinkedIn"
+                >
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="目錄">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="5">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"
+                        aria-label="分享到 Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>分享到 Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"
+                        aria-label="分享到 Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>分享到 Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://donkeybear.github.io/2023/03/reproducing-devilish-calculations/"
+                        aria-label="分享到 LinkedIn"
+                    >
+                        <i class="fab fa-linkedin" aria-hidden="true"></i><span>分享到 LinkedIn</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/profile.svg" alt="作者的圖片"/>
+        
+            <h4 id="about-card-name">DonkeyBear</h4>
+        
+            <div id="about-card-bio"><p>不想寫低階語言，只好從前端慢慢往後端爬。<br>短期目標是全端工程師。</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>學生 / 前端工程師（接案）</p>
+
+            </div>
+        
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover.webp');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-twdzf0w8r1xsairxhrl2bxlcf8wibi9vjckv18a45pqtoxw6z77bukmra6ss.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
